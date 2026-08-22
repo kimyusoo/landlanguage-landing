@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>랜드랭귀지 | 분양 현장 데이터·콘텐츠 파트너</title>
+<meta name="description" content="랜드랭귀지 — 분양 현장을 위한 공공데이터 기반 시세·청약 대시보드와 콘텐츠 마케팅. 매체 광고 집행 대신 근거 자료를 만듭니다. 무료 상담 신청.">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+html{scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;color:#2E3B52;text-wrap:pretty}
+a{color:#C9713B;text-decoration:none}
+a:hover{color:#1B2A4A}
+input,select,textarea{font-family:inherit}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#C9713B !important}
+
+.nav-mobile-btn{display:none}
+@media (max-width:880px){
+  .nav-desktop{display:none !important}
+  .nav-mobile-btn{display:flex !important}
+}
+
+.cta-grid{display:grid;grid-template-columns:minmax(280px,1fr) minmax(360px,1.1fr);gap:56px;align-items:start}
+@media (max-width:880px){.cta-grid{grid-template-columns:1fr}}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:880px){.form-row{grid-template-columns:1fr}}
+
+.faq-toggle svg{transition:transform .2s}
+.faq-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+
+.submit-btn{padding:16px;border-radius:999px;font-weight:700;font-size:16px;border:none;margin-top:4px;background:#D9C9BB;color:#fff;cursor:not-allowed}
+.submit-btn.enabled{background:#C9713B;cursor:pointer}
+</style>
+</head>
+<body>
+<div style="position:relative;background:#F6F4F0">
+
+<header style="position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,64px);background:rgba(246,244,240,0.94);backdrop-filter:blur(8px);border-bottom:1px solid rgba(27,42,74,0.1);z-index:100">
+  <a href="#hero" style="font-size:19px;font-weight:700;color:#1B2A4A;letter-spacing:-0.01em">랜드랭귀지</a>
+  <nav class="nav-desktop" style="display:flex;align-items:center;gap:clamp(14px,2vw,32px)">
+    <a href="#pain" style="color:#2E3B52;font-size:15px;font-weight:500">문제 인식</a>
+    <a href="#solutions" style="color:#2E3B52;font-size:15px;font-weight:500">해결책</a>
+    <a href="#proof" style="color:#2E3B52;font-size:15px;font-weight:500">증거</a>
+    <a href="#process" style="color:#2E3B52;font-size:15px;font-weight:500">진행 프로세스</a>
+    <a href="#faq" style="color:#2E3B52;font-size:15px;font-weight:500">FAQ</a>
+    <a href="#cta" style="background:#C9713B;color:#fff;padding:10px 22px;border-radius:999px;font-weight:600;font-size:14px">무료 상담 신청하기</a>
+  </nav>
+  <button id="menuBtn" class="nav-mobile-btn" aria-label="메뉴 열기" style="width:40px;height:40px;align-items:center;justify-content:center;background:none;border:none;cursor:pointer">
+    <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><rect width="22" height="2" rx="1" fill="#1B2A4A"></rect><rect y="7" width="22" height="2" rx="1" fill="#1B2A4A"></rect><rect y="14" width="22" height="2" rx="1" fill="#1B2A4A"></rect></svg>
+  </button>
+</header>
+
+<div id="mobileMenu" style="display:none;position:fixed;top:72px;left:0;right:0;bottom:0;background:#F6F4F0;z-index:99;flex-direction:column;padding:28px 24px;gap:24px;overflow-y:auto">
+  <a href="#pain" style="color:#1B2A4A;font-size:18px;font-weight:600">문제 인식</a>
+  <a href="#solutions" style="color:#1B2A4A;font-size:18px;font-weight:600">해결책</a>
+  <a href="#proof" style="color:#1B2A4A;font-size:18px;font-weight:600">증거</a>
+  <a href="#process" style="color:#1B2A4A;font-size:18px;font-weight:600">진행 프로세스</a>
+  <a href="#faq" style="color:#1B2A4A;font-size:18px;font-weight:600">FAQ</a>
+  <a href="#cta" style="margin-top:8px;background:#C9713B;color:#fff;text-align:center;padding:16px;border-radius:999px;font-weight:700;font-size:16px">무료 상담 신청하기</a>
+</div>
+
+<section id="hero" style="scroll-margin-top:90px;padding:calc(72px + clamp(48px,8vw,96px)) clamp(20px,5vw,64px) clamp(64px,8vw,96px);max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:clamp(32px,5vw,64px);flex-wrap:wrap">
+  <div style="flex:1 1 420px;min-width:320px">
+    <div style="color:#C9713B;font-weight:700;font-size:14px;letter-spacing:0.02em;margin-bottom:16px">랜드랭귀지 · 시행사 파트너 안내</div>
+    <h1 style="font-size:clamp(30px,4vw,48px);font-weight:700;color:#1B2A4A;line-height:1.32;letter-spacing:-0.02em;margin:0 0 22px">분양 현장에, 광고비가 아니라<br>근거를 더합니다</h1>
+    <p style="font-size:18px;color:#2E3B52;line-height:1.75;margin:0 0 16px">랜드랭귀지는 공공데이터와 콘텐츠로 분양 마케팅을 뒷받침하는 6인 팀입니다. 매체 집행 대행은 하지 않고, 그 대신 현장에 필요한 시세·청약 데이터와 콘텐츠를 직접 만듭니다.</p>
+    <p style="font-size:15px;color:#6B7280;line-height:1.75;margin:0 0 36px">실거래가 대시보드, 분양 콘텐츠, 주간 시세 리포트까지 — 국토교통부 실거래가 공개시스템 등 공공데이터를 기반으로 제작하고 출처와 기준일을 항상 표기합니다.</p>
+    <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">
+      <a href="#cta" style="background:#C9713B;color:#fff;padding:16px 32px;border-radius:999px;font-weight:700;font-size:16px">무료 상담 신청하기</a>
+      <a href="#pain" style="color:#1B2A4A;font-weight:600;font-size:15px;border-bottom:1px solid #1B2A4A;padding-bottom:3px">어떻게 다른지 보기 ↓</a>
+    </div>
+  </div>
+  <div style="flex:1 1 480px;min-width:320px">
+    <img src="assets/img-hero-crop.png" alt="랜드랭귀지 실거래가 대시보드 화면" style="width:100%;border-radius:16px;display:block;box-shadow:0 24px 60px rgba(27,42,74,0.18)">
+  </div>
+</section>
+
+<section id="pain" style="scroll-margin-top:90px;padding:clamp(64px,8vw,96px) clamp(20px,5vw,64px);background:#FFFFFF">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="max-width:640px;margin:0 auto 56px;text-align:center">
+      <div style="color:#C9713B;font-weight:700;font-size:14px;margin-bottom:12px">문제 인식</div>
+      <h2 style="font-size:clamp(26px,3vw,36px);font-weight:700;color:#1B2A4A;margin:0 0 16px;letter-spacing:-0.01em">이런 상황, 익숙하지 않으신가요</h2>
+      <p style="font-size:16px;color:#2E3B52;line-height:1.7;margin:0">분양 마케팅을 진행하다 보면 반복되는 세 가지 불만이 있습니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px">
+      <div style="background:#F6F4F0;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:20px">
+        <img src="assets/img-pain-1-crop.png" alt="" style="width:100%;border-radius:12px;display:block">
+        <h3 style="font-size:17px;font-weight:700;color:#1B2A4A;margin:0;line-height:1.55">"매체비는 쓰는데, 근거가 안 남는다"</h3>
+        <p style="font-size:15px;color:#2E3B52;line-height:1.75;margin:0">광고 집행 리포트는 클릭·노출 수치뿐이고, 실제 시세·입지 데이터에 기반한 설득 자료는 따로 없습니다.</p>
+      </div>
+      <div style="background:#F6F4F0;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:20px">
+        <img src="assets/img-pain-2-crop.png" alt="" style="width:100%;border-radius:12px;display:block">
+        <h3 style="font-size:17px;font-weight:700;color:#1B2A4A;margin:0;line-height:1.55">"현장이 여러 개면 콘텐츠가 형식적으로 돌아간다"</h3>
+        <p style="font-size:15px;color:#2E3B52;line-height:1.75;margin:0">대행사가 동시에 너무 많은 현장을 맡으면, 블로그·SNS 콘텐츠가 현장별 특성 없이 비슷비슷해집니다.</p>
+      </div>
+      <div style="background:#F6F4F0;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:20px">
+        <img src="assets/img-pain-3-crop.png" alt="" style="width:100%;border-radius:12px;display:block">
+        <h3 style="font-size:17px;font-weight:700;color:#1B2A4A;margin:0;line-height:1.55">"검증 안 된 숫자로 홍보하다 신뢰를 잃는 게 더 걱정된다"</h3>
+        <p style="font-size:15px;color:#2E3B52;line-height:1.75;margin:0">과장된 상위노출·계약률 약속은 나중에 되돌아옵니다. 출처가 분명한 자료로 설명하고 싶은데, 그런 걸 만들어 줄 파트너가 마땅치 않습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solutions" style="scroll-margin-top:90px;padding:clamp(64px,8vw,96px) clamp(20px,5vw,64px);background:#F6F4F0">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="max-width:640px;margin:0 auto 56px;text-align:center">
+      <div style="color:#C9713B;font-weight:700;font-size:14px;margin-bottom:12px">해결책</div>
+      <h2 style="font-size:clamp(26px,3vw,36px);font-weight:700;color:#1B2A4A;margin:0 0 16px;letter-spacing:-0.01em">저희가 실제로 하는 일 세 가지</h2>
+      <p style="font-size:16px;color:#2E3B52;line-height:1.7;margin:0">매체 집행이 아니라, 매체 집행의 근거가 되는 데이터와 콘텐츠를 만듭니다.</p>
+    </div>
+
+    <div style="background:#fff;border-radius:20px;padding:clamp(28px,4vw,48px);margin-bottom:28px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+        <span style="background:#1B2A4A;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">1</span>
+        <h3 style="font-size:21px;font-weight:700;color:#1B2A4A;margin:0">청약·시세 데이터 대시보드</h3>
+      </div>
+      <p style="font-size:16px;color:#2E3B52;line-height:1.85;margin:0 0 28px">실거래가, 청약 경쟁률, 동 단위 시세를 한 화면에 정리한 대시보드를 제작합니다. 상담 현장에서 바로 보여줄 수 있는 형태로, 출처와 기준일을 함께 표기합니다. <span style="color:#6B7280;font-size:14px">(참고: 공공데이터 API 기반 청약 대시보드, Google Workspace 연동 COC 수지분석 대시보드 — 자체 포트폴리오 프로젝트로 구현 경험 보유)</span></p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+        <img src="assets/img-dashboard-cheongyak.png" alt="청약·시세 데이터 대시보드 화면" style="width:100%;border-radius:12px;display:block;box-shadow:0 12px 32px rgba(27,42,74,0.12)">
+        <img src="assets/img-dashboard-coc.png" alt="COC 수지분석 대시보드 화면" style="width:100%;border-radius:12px;display:block;box-shadow:0 12px 32px rgba(27,42,74,0.12)">
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:20px;padding:clamp(28px,4vw,48px);margin-bottom:28px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+        <span style="background:#1B2A4A;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">2</span>
+        <h3 style="font-size:21px;font-weight:700;color:#1B2A4A;margin:0">분양 콘텐츠 제작</h3>
+      </div>
+      <p style="font-size:16px;color:#2E3B52;line-height:1.85;margin:0 0 28px">현장 소개 블로그, SNS 게시물, 매물·분양 랜딩페이지를 기획부터 발행까지 내부 인력이 직접 작성합니다. 외주 작가를 쓰지 않아 현장 정보를 담당자가 계속 파악한 상태로 콘텐츠에 반영합니다.</p>
+      <img src="assets/img-content-sample.png" alt="분양 콘텐츠 제작 예시" style="width:100%;border-radius:12px;display:block;box-shadow:0 12px 32px rgba(27,42,74,0.12)">
+    </div>
+
+    <div style="background:#fff;border-radius:20px;padding:clamp(28px,4vw,48px)">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+        <span style="background:#1B2A4A;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0">3</span>
+        <h3 style="font-size:21px;font-weight:700;color:#1B2A4A;margin:0">투명한 주간 리포트</h3>
+      </div>
+      <p style="font-size:16px;color:#2E3B52;line-height:1.85;margin:0 0 28px">노출 키워드, 유입 수, 문의 건수를 매달 가공 없이 보고합니다. 검색 상위 노출이나 계약률을 보장하는 문구는 쓰지 않으며, 실제 지표만 전달합니다.</p>
+      <img src="assets/img-weekly-report.png" alt="주간 리포트 예시" style="width:100%;border-radius:12px;display:block;box-shadow:0 12px 32px rgba(27,42,74,0.12)">
+    </div>
+  </div>
+</section>
+
+<section id="proof" style="scroll-margin-top:90px;padding:clamp(64px,8vw,96px) clamp(20px,5vw,64px);background:#FFFFFF">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="max-width:640px;margin:0 auto 56px;text-align:center">
+      <div style="color:#C9713B;font-weight:700;font-size:14px;margin-bottom:12px">증거</div>
+      <h2 style="font-size:clamp(26px,3vw,36px);font-weight:700;color:#1B2A4A;margin:0 0 16px;letter-spacing:-0.01em">6명이 직접 만듭니다</h2>
+      <p style="font-size:16px;color:#2E3B52;line-height:1.7;margin:0">외주 없이 내부 인력이 기획부터 발행까지 책임지는 구조입니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(280px,1fr) minmax(340px,1.3fr);gap:48px;align-items:center">
+      <img src="assets/img-team-diagram.png" alt="팀 구성 다이어그램" style="width:100%;border-radius:16px;display:block;box-shadow:0 12px 32px rgba(27,42,74,0.1)">
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <div>
+          <div style="font-weight:700;color:#1B2A4A;font-size:16px;margin-bottom:8px">팀 구성</div>
+          <p style="font-size:15px;color:#2E3B52;line-height:1.8;margin:0">대표 1 · 콘텐츠기획 2 · 데이터분석 2 · 디자인 1, 총 6명. 담당자 1인당 동시 담당 거래처를 4곳으로 제한해 품질을 관리합니다.</p>
+        </div>
+        <div>
+          <div style="font-weight:700;color:#1B2A4A;font-size:16px;margin-bottom:8px">데이터 프로젝트</div>
+          <p style="font-size:15px;color:#2E3B52;line-height:1.8;margin:0">공공데이터포털 API를 연동한 청약 대시보드(지역·일정·경쟁률 비교, Vercel 배포), Google Workspace와 연동한 COC 수지분석 자동 리포팅 대시보드를 자체 구축한 경험이 있습니다.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+          <div style="background:#F6F4F0;border-radius:12px;padding:18px 14px;text-align:center">
+            <div style="color:#C9713B;font-size:22px;font-weight:700;letter-spacing:-0.02em">320→1,850명</div>
+            <div style="color:#6B7280;font-size:12.5px;margin-top:6px;line-height:1.5">블로그 월 유입</div>
+          </div>
+          <div style="background:#F6F4F0;border-radius:12px;padding:18px 14px;text-align:center">
+            <div style="color:#C9713B;font-size:22px;font-weight:700;letter-spacing:-0.02em">12개</div>
+            <div style="color:#6B7280;font-size:12.5px;margin-top:6px;line-height:1.5">검색 1페이지 노출 키워드</div>
+          </div>
+          <div style="background:#F6F4F0;border-radius:12px;padding:18px 14px;text-align:center">
+            <div style="color:#C9713B;font-size:22px;font-weight:700;letter-spacing:-0.02em">4→17건</div>
+            <div style="color:#6B7280;font-size:12.5px;margin-top:6px;line-height:1.5">월 평균 상담 문의</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:#6B7280;line-height:1.7;margin:0">공인중개사 거래처(홍길동 공인중개사사무소, 서울 동작구 노량진동) 기준 5개월 차 진행 중인 실적입니다. <em>(공인중개사 사례이며, 시행사 현장과는 조건이 다를 수 있습니다.)</em></p>
+        <div>
+          <div style="font-weight:700;color:#1B2A4A;font-size:16px;margin-bottom:8px">데이터 원칙</div>
+          <p style="font-size:15px;color:#2E3B52;line-height:1.8;margin:0">모든 리포트·대시보드에 출처와 기준일을 표기하고, 오류 발견 시 3영업일 이내 정정합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" style="scroll-margin-top:90px;padding:clamp(64px,8vw,96px) clamp(20px,5vw,64px);background:#F6F4F0">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="max-width:640px;margin:0 auto 48px;text-align:center">
+      <div style="color:#C9713B;font-weight:700;font-size:14px;margin-bottom:12px">진행 프로세스</div>
+      <h2 style="font-size:clamp(26px,3vw,36px);font-weight:700;color:#1B2A4A;margin:0;letter-spacing:-0.01em">상담 신청 후, 이렇게 진행됩니다</h2>
+    </div>
+    <img src="assets/img-process-timeline.png" alt="5단계 진행 프로세스 타임라인" style="width:100%;border-radius:16px;display:block;box-shadow:0 12px 32px rgba(27,42,74,0.1)">
+    <div style="margin-top:24px;background:#fff;border-radius:14px;padding:22px 32px;text-align:center">
+      <p style="font-size:15px;color:#2E3B52;line-height:1.7;margin:0"><strong style="color:#1B2A4A">1~3단계까지는 비용이 발생하지 않습니다.</strong> 진단 결과만 받아보고 진행 여부를 나중에 결정하셔도 됩니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="scroll-margin-top:90px;padding:clamp(64px,8vw,96px) clamp(20px,5vw,64px);background:#FFFFFF">
+  <div style="max-width:820px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:48px">
+      <div style="color:#C9713B;font-weight:700;font-size:14px;margin-bottom:12px">FAQ</div>
+      <h2 style="font-size:clamp(26px,3vw,36px);font-weight:700;color:#1B2A4A;margin:0;letter-spacing:-0.01em">상담 전에 자주 묻는 질문</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <div class="faq-item" style="background:#F6F4F0;border-radius:14px;overflow:hidden">
+        <button class="faq-toggle" aria-expanded="true" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 26px;background:none;border:none;cursor:pointer;text-align:left;font-size:16px;font-weight:600;color:#1B2A4A">
+          <span>광고 집행(매체비)도 대신 해주나요?</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M4 6l4 4 4-4" stroke="#1B2A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="faq-answer" style="padding:0 26px 24px;font-size:15px;color:#2E3B52;line-height:1.8">아닙니다. 검색광고·디스플레이 광고 같은 매체 집행은 다루지 않습니다. 이미 운영 중인 광고 대행사가 있다면, 그 성과를 뒷받침할 데이터와 콘텐츠를 저희가 만드는 구조로 함께 작동합니다.</div>
+      </div>
+
+      <div class="faq-item" style="background:#F6F4F0;border-radius:14px;overflow:hidden">
+        <button class="faq-toggle" aria-expanded="false" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 26px;background:none;border:none;cursor:pointer;text-align:left;font-size:16px;font-weight:600;color:#1B2A4A">
+          <span>비용은 어느 정도인가요?</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M4 6l4 4 4-4" stroke="#1B2A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="faq-answer" hidden style="padding:0 26px 24px;font-size:15px;color:#2E3B52;line-height:1.8">시행사 대상 서비스는 현장 규모와 요청 범위에 따라 달라져 표준 견적표를 적용하지 않습니다. 무료 진단 후 서면 견적을 전달해 드립니다.</div>
+      </div>
+
+      <div class="faq-item" style="background:#F6F4F0;border-radius:14px;overflow:hidden">
+        <button class="faq-toggle" aria-expanded="false" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 26px;background:none;border:none;cursor:pointer;text-align:left;font-size:16px;font-weight:600;color:#1B2A4A">
+          <span>저희 현장만 전담으로 맡아주나요?</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M4 6l4 4 4-4" stroke="#1B2A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="faq-answer" hidden style="padding:0 26px 24px;font-size:15px;color:#2E3B52;line-height:1.8">담당자 1인당 동시 담당 거래처를 4곳으로 제한하고 있어, 동시에 지나치게 많은 현장을 맡지 않습니다. 동일 상권 경쟁 현장과의 동시 진행 여부는 상담 시 확인해 드립니다.</div>
+      </div>
+
+      <div class="faq-item" style="background:#F6F4F0;border-radius:14px;overflow:hidden">
+        <button class="faq-toggle" aria-expanded="false" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 26px;background:none;border:none;cursor:pointer;text-align:left;font-size:16px;font-weight:600;color:#1B2A4A">
+          <span>최소 계약 기간이 있나요?</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M4 6l4 4 4-4" stroke="#1B2A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="faq-answer" hidden style="padding:0 26px 24px;font-size:15px;color:#2E3B52;line-height:1.8">표준 서비스(블로그·리포트·SNS)는 최소 3개월이지만, 시행사 대상 서비스는 현장 분양 일정에 맞춰 별도로 협의합니다.</div>
+      </div>
+
+      <div class="faq-item" style="background:#F6F4F0;border-radius:14px;overflow:hidden">
+        <button class="faq-toggle" aria-expanded="false" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 26px;background:none;border:none;cursor:pointer;text-align:left;font-size:16px;font-weight:600;color:#1B2A4A">
+          <span>성과(계약률, 문의 건수)를 보장하나요?</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M4 6l4 4 4-4" stroke="#1B2A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="faq-answer" hidden style="padding:0 26px 24px;font-size:15px;color:#2E3B52;line-height:1.8">보장하지 않습니다. 검색 노출과 문의 건수는 콘텐츠 품질 외에도 입지·시장 상황의 영향을 받기 때문입니다. 대신 매월 실제 지표를 가감 없이 보고합니다.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="cta" style="scroll-margin-top:90px;padding:clamp(64px,8vw,120px) clamp(20px,5vw,64px);background:#1B2A4A">
+  <div class="cta-grid" style="max-width:1280px;margin:0 auto">
+    <div>
+      <h2 style="font-size:clamp(26px,3vw,38px);font-weight:700;color:#fff;margin:0 0 18px;letter-spacing:-0.01em;line-height:1.4">지금 현장, 데이터로<br>설명할 준비가 되셨나요</h2>
+      <p style="font-size:16px;color:rgba(255,255,255,0.78);line-height:1.8;margin:0 0 28px">무료 진단까지는 비용이 발생하지 않습니다. 아래 정보를 남겨주시면 3영업일 이내에 담당자가 직접 연락드립니다.</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.85);font-size:14px"><span style="color:#C9713B;font-weight:700">✓</span> 3영업일 이내 담당자 직접 회신</div>
+        <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.85);font-size:14px"><span style="color:#C9713B;font-weight:700">✓</span> 5영업일 내 대면 상담 가능</div>
+        <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.85);font-size:14px"><span style="color:#C9713B;font-weight:700">✓</span> 1~3단계(진단·제안까지) 비용 없음</div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:20px;padding:clamp(28px,4vw,40px)">
+      <div id="ctaThanks" style="display:none;text-align:center;padding:40px 12px">
+        <div style="font-size:40px;margin-bottom:16px">✓</div>
+        <h3 style="font-size:20px;font-weight:700;color:#1B2A4A;margin:0 0 12px">신청이 접수되었습니다</h3>
+        <p style="font-size:15px;color:#2E3B52;line-height:1.7;margin:0">3영업일 이내에 담당자가 입력하신 연락처 또는 이메일로 직접 연락드립니다.</p>
+      </div>
+
+      <form id="ctaForm" style="display:flex;flex-direction:column;gap:18px">
+        <div class="form-row">
+          <div>
+            <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px">시행사명 *</label>
+            <input type="text" name="company" required style="width:100%;padding:12px 14px;border:1px solid rgba(27,42,74,0.16);border-radius:10px;font-size:15px;color:#2E3B52;background:#F6F4F0">
+          </div>
+          <div>
+            <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px">담당자명 *</label>
+            <input type="text" name="contact_name" required style="width:100%;padding:12px 14px;border:1px solid rgba(27,42,74,0.16);border-radius:10px;font-size:15px;color:#2E3B52;background:#F6F4F0">
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px">직급/부서</label>
+            <input type="text" name="title" style="width:100%;padding:12px 14px;border:1px solid rgba(27,42,74,0.16);border-radius:10px;font-size:15px;color:#2E3B52;background:#F6F4F0">
+          </div>
+          <div>
+            <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px">연락처(휴대폰) *</label>
+            <input type="tel" name="phone" required placeholder="010-0000-0000" style="width:100%;padding:12px 14px;border:1px solid rgba(27,42,74,0.16);border-radius:10px;font-size:15px;color:#2E3B52;background:#F6F4F0">
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px">이메일 *</label>
+          <input type="email" name="email" required style="width:100%;padding:12px 14px;border:1px solid rgba(27,42,74,0.16);border-radius:10px;font-size:15px;color:#2E3B52;background:#F6F4F0">
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px">사업지 위치 / 현장명 *</label>
+          <input type="text" name="site" required placeholder="예: 서울 동작구 (시·군·구 단위만 입력해도 무방합니다)" style="width:100%;padding:12px 14px;border:1px solid rgba(27,42,74,0.16);border-radius:10px;font-size:15px;color:#2E3B52;background:#F6F4F0">
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:10px">사업 단계 *</label>
+          <div style="display:flex;flex-wrap:wrap;gap:12px 20px">
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="radio" name="stage" value="사업 준비 중" required style="accent-color:#C9713B">사업 준비 중</label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="radio" name="stage" value="분양 예정" style="accent-color:#C9713B">분양 예정</label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="radio" name="stage" value="분양 진행 중" style="accent-color:#C9713B">분양 진행 중</label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="radio" name="stage" value="입주 준비 중" style="accent-color:#C9713B">입주 준비 중</label>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:10px">관심 서비스</label>
+          <div style="display:flex;flex-wrap:wrap;gap:12px 20px">
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="checkbox" name="interest" value="데이터 대시보드" style="accent-color:#C9713B">시세·청약 데이터 대시보드</label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="checkbox" name="interest" value="분양 콘텐츠" style="accent-color:#C9713B">분양 콘텐츠(블로그·SNS·랜딩페이지)</label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="checkbox" name="interest" value="주간 리포트" style="accent-color:#C9713B">주간 리포트</label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="checkbox" name="interest" value="미정" style="accent-color:#C9713B">잘 모르겠음, 상담받고 싶음</label>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:10px">상담 희망 방식</label>
+          <div style="display:flex;flex-wrap:wrap;gap:12px 20px">
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="radio" name="channel" value="전화" style="accent-color:#C9713B">전화</label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="radio" name="channel" value="방문" style="accent-color:#C9713B">방문</label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:14px;color:#2E3B52"><input type="radio" name="channel" value="이메일" style="accent-color:#C9713B">이메일</label>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px">문의 내용</label>
+          <textarea name="message" rows="3" style="width:100%;padding:12px 14px;border:1px solid rgba(27,42,74,0.16);border-radius:10px;font-size:15px;color:#2E3B52;background:#F6F4F0;resize:vertical;font-family:inherit"></textarea>
+        </div>
+        <label style="display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:#2E3B52;line-height:1.6;padding-top:6px;border-top:1px solid rgba(27,42,74,0.1)">
+          <input type="checkbox" id="consentCheckbox" required style="accent-color:#C9713B;margin-top:2px">
+          <span>남겨주신 정보는 상담 목적 외에는 사용하지 않으며, 계약 기간 및 종료 후 2년간 제3자에게 제공하지 않습니다. <span style="text-decoration:underline;color:#1B2A4A">개인정보처리방침</span>에 동의합니다. *</span>
+        </label>
+        <button type="submit" id="submitBtn" class="submit-btn" disabled>무료 상담 신청하기</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer style="padding:32px clamp(20px,5vw,64px);background:#16233d;text-align:center">
+  <p style="font-size:13px;color:rgba(255,255,255,0.55);margin:0;line-height:1.7">랜드랭귀지 · 본 페이지의 대시보드·리포트 화면은 자체 포트폴리오 및 참고 프로젝트를 기반으로 제작되었습니다.</p>
+</footer>
+
+<button id="scrollTopBtn" aria-label="맨 위로" style="display:none;position:fixed;right:24px;bottom:104px;width:48px;height:48px;border-radius:50%;background:#1B2A4A;color:#fff;border:none;box-shadow:0 8px 20px rgba(27,42,74,0.3);cursor:pointer;align-items:center;justify-content:center;z-index:90">
+  <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 7l5-5 5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+
+<div style="position:fixed;right:24px;bottom:24px;width:64px;height:64px;border-radius:50%;border:2px dashed rgba(27,42,74,0.35);background:rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;z-index:90;text-align:center;font-size:10px;color:#6B7280;line-height:1.3;padding:4px">챗봇<br>위젯</div>
+
+</div>
+
+<script>
+(function () {
+  // 모바일 메뉴
+  var menuBtn = document.getElementById('menuBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  function closeMenu(){ mobileMenu.style.display = 'none'; }
+  function toggleMenu(){ mobileMenu.style.display = (mobileMenu.style.display === 'flex') ? 'none' : 'flex'; }
+  menuBtn.addEventListener('click', toggleMenu);
+  Array.prototype.forEach.call(mobileMenu.querySelectorAll('a'), function (a) {
+    a.addEventListener('click', closeMenu);
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 880) closeMenu();
+  });
+
+  // FAQ 아코디언 (한 번에 하나만 열림, 첫 항목 기본 오픈)
+  var faqButtons = document.querySelectorAll('.faq-toggle');
+  Array.prototype.forEach.call(faqButtons, function (btn) {
+    btn.addEventListener('click', function () {
+      var wasOpen = btn.getAttribute('aria-expanded') === 'true';
+      Array.prototype.forEach.call(faqButtons, function (b) {
+        b.setAttribute('aria-expanded', 'false');
+        b.parentElement.querySelector('.faq-answer').hidden = true;
+      });
+      if (!wasOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        btn.parentElement.querySelector('.faq-answer').hidden = false;
+      }
+    });
+  });
+
+  // 맨 위로 버튼
+  var topBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', function () {
+    topBtn.style.display = window.scrollY > 600 ? 'flex' : 'none';
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // 개인정보 동의 체크 시 제출 버튼 활성화
+  var consent = document.getElementById('consentCheckbox');
+  var submitBtn = document.getElementById('submitBtn');
+  function updateSubmitState() {
+    submitBtn.disabled = !consent.checked;
+    submitBtn.classList.toggle('enabled', consent.checked);
+  }
+  consent.addEventListener('change', updateSubmitState);
+  updateSubmitState();
+
+  // 상담 폼 제출
+  // TODO: 아래 FORM_ENDPOINT에 실제 폼 수집 엔드포인트(Formspree, Netlify Forms, Google Apps Script 등)를 연결하세요.
+  // 비워두면 화면에는 "접수되었습니다"가 표시되지만 실제로 어디에도 전송되지 않습니다.
+  var FORM_ENDPOINT = '';
+  var form = document.getElementById('ctaForm');
+  var thanks = document.getElementById('ctaThanks');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!consent.checked) return;
+    if (FORM_ENDPOINT) {
+      fetch(FORM_ENDPOINT, { method: 'POST', body: new FormData(form) })
+        .then(showThanks)
+        .catch(showThanks);
+    } else {
+      showThanks();
+    }
+  });
+  function showThanks() {
+    form.style.display = 'none';
+    thanks.style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>

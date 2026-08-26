@@ -44,7 +44,6 @@ module.exports = async function handler(req, res) {
   const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
   let reply;
-  let debugMatches;
   try {
     // 1) 질문 임베딩
     const embeddingRes = await openai.embeddings.create({
@@ -59,7 +58,6 @@ module.exports = async function handler(req, res) {
       match_count: MATCH_COUNT,
     });
     if (matchError) throw matchError;
-    debugMatches = (matches || []).map((m) => ({ s: m.source, sim: m.similarity }));
 
     const relevant = (matches || []).filter((m) => typeof m.similarity === 'number' && m.similarity >= SIMILARITY_THRESHOLD);
 
@@ -100,5 +98,5 @@ module.exports = async function handler(req, res) {
     console.error('chat_logs insert failed', logErr);
   }
 
-  res.status(200).json({ reply, _debugMatches: debugMatches, _debugQuestion: question, _debugQuestionCodes: Array.from(question).map((c) => c.codePointAt(0)) });
+  res.status(200).json({ reply });
 };

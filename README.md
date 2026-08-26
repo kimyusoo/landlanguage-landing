@@ -5,12 +5,21 @@
 ## 구성
 
 ```
-index.html        페이지 본체 (챗봇 스크립트 로드, 상담 폼 포함)
-chatbot.js         우측 하단 RAG 챗봇 위젯 (프론트엔드)
-api/chat.js        POST /api/chat  — 질문 임베딩 → Supabase 검색 → LLM 답변 생성 → chat_logs 저장
-api/lead.js        POST /api/lead  — 상담 폼 제출 → leads 저장
-scripts/ingest.js  docs/*.md → 청크 분할 → 임베딩 → Supabase documents 적재 (수동 실행)
-docs/              챗봇이 답변 근거로 삼는 원본 문서 (company-profile.md, service-policy.md, faq.md)
+index.html         페이지 본체 (챗봇 스크립트 로드, 상담 폼 포함)
+chatbot.js          우측 하단 RAG 챗봇 위젯 (프론트엔드)
+admin.html/admin.js 관리자 페이지 — 비밀번호 게이트, 통계, 리드/대화기록/문서 탭, 파일 업로드
+api/chat.js         POST /api/chat        — 질문 임베딩 → Supabase 검색 → LLM 답변 생성 → chat_logs 저장
+api/lead.js         POST /api/lead        — 상담 폼 제출 → leads 저장
+api/admin/stats.js  GET  /api/admin/stats — 리드·대화·문서 통계
+api/admin/leads.js  GET  /api/admin/leads — 최근 리드 200건
+api/admin/chat-logs.js GET /api/admin/chat-logs — 최근 대화 500건(세션별로 묶어서 반환)
+api/admin/documents.js GET/DELETE /api/admin/documents — 지식 문서 출처 목록 조회·삭제
+api/admin/upload.js POST /api/admin/upload — PDF/MD/TXT 업로드 → 청크 분할 → 임베딩 → documents 적재
+lib/chunk.js        청크 분할 로직 (scripts/ingest.js, api/admin/upload.js 공용)
+lib/ingest-core.js  청크→임베딩→저장 파이프라인 (scripts/ingest.js, api/admin/upload.js 공용)
+lib/admin-auth.js   관리자 비밀번호 검사 (x-admin-password 헤더 비교)
+scripts/ingest.js   docs/*.md → 청크 분할 → 임베딩 → Supabase documents 적재 (수동 실행)
+docs/               챗봇이 답변 근거로 삼는 원본 문서 (company-profile.md, service-policy.md, faq.md)
 ```
 
 ## 필수 환경변수 (서버 전용 — 절대 프론트엔드 코드에 넣지 않습니다)
@@ -22,8 +31,17 @@ docs/              챗봇이 답변 근거로 삼는 원본 문서 (company-prof
 | `SUPABASE_URL` | Supabase 프로젝트 URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service_role 키 (RLS 우회, **anon 키 아님**) |
 | `OPENAI_API_KEY` | 임베딩(`text-embedding-3-small`)과 답변 생성(`gpt-4o-mini`)에 사용 |
+| `ADMIN_PASSWORD` | (선택) `/admin.html` 게이트 비밀번호. 설정하지 않으면 실습용 기본값 `123456`이 적용됩니다. |
 
 환경변수 등록/변경 후에는 Vercel에서 **재배포(Redeploy)**가 필요합니다.
+
+## 관리자 페이지 (`/admin.html`)
+
+비밀번호 게이트(기본 `123456`) 뒤에 통계 카드, 리드/대화기록/문서 3개 탭이 있습니다. 문서 탭에서 PDF·MD·TXT 파일을 드래그하거나 선택하면 서버가 자동으로 청크 분할 → 임베딩 → `documents` 테이블 적재까지 처리해, 별도로 `npm run ingest`를 돌리지 않아도 챗봇 지식 기반에 즉시 반영됩니다. 같은 파일명을 다시 올리면 기존 청크를 지우고 새로 저장합니다(교체).
+
+**⚠️ 보안 관련 중요 주의사항**: 이 비밀번호 게이트는 **실습/데모 목적**입니다. 세션 관리, 비밀번호 해싱, 요청 횟수 제한(rate limit)이 전혀 없는 단순 평문 비교이며, `x-admin-password` 헤더는 브라우저 네트워크 탭에서 누구나 볼 수 있습니다. 실제 고객 데이터(`leads`, `chat_logs`)를 다루는 운영 환경에서는 반드시 Supabase Auth, Vercel의 Password Protection, 또는 별도 인증 시스템으로 교체한 뒤 사용하세요.
+
+파일 업로드는 원본 파일 기준 최대 3MB(base64로 변환해 전송하며 Vercel 요청 본문 한도를 고려한 제한)까지 지원합니다.
 
 ## 문서 임베딩 적재 (최초 1회 + 문서 수정할 때마다)
 

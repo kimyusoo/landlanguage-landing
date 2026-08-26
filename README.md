@@ -1,13 +1,16 @@
 # 랜드랭귀지 랜딩페이지 — 배포용 패키지
 
-정적 랜딩페이지(`index.html` + `assets/`)에 **Supabase + OpenAI 기반 RAG 고객응대 챗봇**과 **상담 신청 폼 저장**이 붙어 있는 프로젝트입니다. Vercel의 Node 서버리스 함수(`api/*.js`)를 사용하므로 순수 정적 호스팅(GitHub Pages 등)으로는 챗봇/폼 저장 기능이 동작하지 않고 프론트엔드(디자인)만 보입니다. **Vercel 배포를 기준으로 합니다.**
+정적 랜딩페이지(`public/index.html` + `public/assets/`)에 **Supabase + OpenAI 기반 RAG 고객응대 챗봇**과 **상담 신청 폼 저장**이 붙어 있는 프로젝트입니다. Vercel의 Node 서버리스 함수(`api/*.js`)를 사용하므로 순수 정적 호스팅(GitHub Pages 등)으로는 챗봇/폼 저장 기능이 동작하지 않고 프론트엔드(디자인)만 보입니다. **Vercel 배포를 기준으로 합니다.**
 
 ## 구성
 
+브라우저에 공개되는 파일은 전부 `public/` 안에만 둡니다. `public/` 바깥의 `api/`, `lib/`, `scripts/`, `docs/`, `package.json` 등은 Vercel이 정적 파일로 서빙하지 않으며(서버리스 함수 실행 시에만 내부적으로 사용), 요청 시 404를 반환합니다.
+
 ```
-index.html         페이지 본체 (챗봇 스크립트 로드, 상담 폼 포함)
-chatbot.js          우측 하단 RAG 챗봇 위젯 (프론트엔드)
-admin.html/admin.js 관리자 페이지 — 비밀번호 게이트, 통계, 리드/대화기록/문서 탭, 파일 업로드
+public/index.html   페이지 본체 (챗봇 스크립트 로드, 상담 폼 포함)
+public/chatbot.js    우측 하단 RAG 챗봇 위젯 (프론트엔드)
+public/admin.html/admin.js 관리자 페이지 — 비밀번호 게이트, 통계, 리드/대화기록/문서 탭, 파일 업로드
+public/assets/       이미지 등 정적 리소스
 api/chat.js         POST /api/chat        — 질문 임베딩 → Supabase 검색 → LLM 답변 생성 → chat_logs 저장
 api/lead.js         POST /api/lead        — 상담 폼 제출 → leads 저장
 api/admin/stats.js  GET  /api/admin/stats — 리드·대화·문서 통계

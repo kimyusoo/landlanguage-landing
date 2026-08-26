@@ -58,6 +58,7 @@ module.exports = async function handler(req, res) {
       match_count: MATCH_COUNT,
     });
     if (matchError) throw matchError;
+    console.log('DEBUG matches', JSON.stringify((matches || []).map((m) => ({ s: m.source, sim: m.similarity }))));
 
     const relevant = (matches || []).filter((m) => typeof m.similarity === 'number' && m.similarity >= SIMILARITY_THRESHOLD);
 

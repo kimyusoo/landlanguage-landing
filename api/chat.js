@@ -100,5 +100,5 @@ module.exports = async function handler(req, res) {
     console.error('chat_logs insert failed', logErr);
   }
 
-  res.status(200).json({ reply, _debugMatches: debugMatches });
+  res.status(200).json({ reply, _debugMatches: debugMatches, _debugQuestion: question, _debugQuestionCodes: Array.from(question).map((c) => c.codePointAt(0)) });
 };

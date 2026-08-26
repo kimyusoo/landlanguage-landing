@@ -8,7 +8,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const EMBEDDING_MODEL = 'text-embedding-3-small'; // 1536차원 — documents.embedding과 동일
 const CHAT_MODEL = process.env.LL_CHAT_MODEL || 'gpt-4o-mini';
 const MATCH_COUNT = 4;
-const SIMILARITY_THRESHOLD = 0.72; // 이 값 미만이면 "관련 문서 없음"으로 취급
+const SIMILARITY_THRESHOLD = 0.4; // 이 값 미만이면 "관련 문서 없음"으로 취급 (text-embedding-3-small + 한국어 짧은 질의 기준 실측 보정값)
 
 const SYSTEM_PROMPT = `당신은 부동산마케팅 대행사 '랜드랭귀지'의 고객 상담 챗봇입니다. 다음 규칙을 반드시 지키세요.
 

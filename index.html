@@ -27,6 +27,9 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#C9713B !impor
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 @media (max-width:880px){.form-row{grid-template-columns:1fr}}
 
+.proof-grid{grid-template-columns:minmax(280px,1fr) minmax(340px,1.3fr)}
+@media (max-width:880px){.proof-grid{grid-template-columns:1fr}}
+
 .faq-toggle svg{transition:transform .2s}
 .faq-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
 
@@ -151,7 +154,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#C9713B !impor
       <h2 style="font-size:clamp(26px,3vw,36px);font-weight:700;color:#1B2A4A;margin:0 0 16px;letter-spacing:-0.01em">6명이 직접 만듭니다</h2>
       <p style="font-size:16px;color:#2E3B52;line-height:1.7;margin:0">외주 없이 내부 인력이 기획부터 발행까지 책임지는 구조입니다.</p>
     </div>
-    <div style="display:grid;grid-template-columns:minmax(280px,1fr) minmax(340px,1.3fr);gap:48px;align-items:center">
+    <div class="proof-grid" style="display:grid;gap:48px;align-items:center">
       <img src="assets/img-team-diagram.png" alt="팀 구성 다이어그램" style="width:100%;border-radius:16px;display:block;box-shadow:0 12px 32px rgba(27,42,74,0.1)">
       <div style="display:flex;flex-direction:column;gap:28px">
         <div>

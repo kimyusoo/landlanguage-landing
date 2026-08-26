@@ -1,28 +1,59 @@
 # 랜드랭귀지 랜딩페이지 — 배포용 패키지
 
-`index.html` 하나와 `assets/` 폴더만으로 동작하는 순수 정적 사이트입니다. 별도 빌드 과정이나 서버 없이 그대로 배포할 수 있습니다.
+정적 랜딩페이지(`index.html` + `assets/`)에 **Supabase + OpenAI 기반 RAG 고객응대 챗봇**과 **상담 신청 폼 저장**이 붙어 있는 프로젝트입니다. Vercel의 Node 서버리스 함수(`api/*.js`)를 사용하므로 순수 정적 호스팅(GitHub Pages 등)으로는 챗봇/폼 저장 기능이 동작하지 않고 프론트엔드(디자인)만 보입니다. **Vercel 배포를 기준으로 합니다.**
 
-## 배포 방법 (택 1)
+## 구성
 
-- **Netlify / Vercel**: 이 폴더를 그대로 드래그 앤 드롭하거나 `vercel` / `netlify deploy` 명령으로 배포
-- **GitHub Pages**: 이 폴더 내용을 저장소 루트(또는 `docs/`)에 올리고 Pages 설정만 켜면 됩니다
-- **일반 웹호스팅/S3**: `index.html`과 `assets/` 폴더를 그대로 업로드
-
-## 배포 전 반드시 확인할 것 — 상담 폼 연결
-
-`index.html` 하단 `<script>`에 아래 부분이 있습니다.
-
-```js
-var FORM_ENDPOINT = '';
+```
+index.html        페이지 본체 (챗봇 스크립트 로드, 상담 폼 포함)
+chatbot.js         우측 하단 RAG 챗봇 위젯 (프론트엔드)
+api/chat.js        POST /api/chat  — 질문 임베딩 → Supabase 검색 → LLM 답변 생성 → chat_logs 저장
+api/lead.js        POST /api/lead  — 상담 폼 제출 → leads 저장
+scripts/ingest.js  docs/*.md → 청크 분할 → 임베딩 → Supabase documents 적재 (수동 실행)
+docs/              챗봇이 답변 근거로 삼는 원본 문서 (company-profile.md, service-policy.md, faq.md)
 ```
 
-**지금 이대로 배포하면 "신청이 접수되었습니다" 메시지는 뜨지만, 입력된 상담 신청 내용은 어디로도 전송되지 않습니다.** 화면 동작만 있는 상태이니, 배포 전에 다음 중 하나를 선택해 `FORM_ENDPOINT`에 실제 주소를 넣어주세요.
+## 필수 환경변수 (서버 전용 — 절대 프론트엔드 코드에 넣지 않습니다)
 
-1. **Formspree** (formspree.io) — 무료 플랜으로 이메일 수신 가능. 가입 후 발급되는 endpoint URL을 그대로 넣으면 됩니다.
-2. **Netlify Forms** — Netlify에 배포하는 경우, `<form id="ctaForm">` 태그에 `data-netlify="true"` 속성만 추가하면 별도 endpoint 없이 Netlify 대시보드에서 제출 내역을 확인할 수 있습니다.
-3. **Google Apps Script / 자체 백엔드** — 구글 스프레드시트에 쌓거나 사내 CRM으로 보내고 싶다면 해당 웹훅 URL을 endpoint로 사용하세요.
+`.env.example`을 참고하세요. **Vercel 대시보드 → 프로젝트 → Settings → Environment Variables**에 아래 3개를 등록해야 `/api/chat`, `/api/lead`가 동작합니다. 등록 전에는 두 API 모두 `500 server not configured`를 반환하도록 만들어져 있어 안전하게 실패합니다(에러 노출 없이 조용히 막힘).
 
-연결 후에는 실제로 폼을 한 번 제출해서 알림(이메일/시트/CRM)이 정상적으로 오는지 반드시 확인하시길 권합니다.
+| 이름 | 설명 |
+| --- | --- |
+| `SUPABASE_URL` | Supabase 프로젝트 URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service_role 키 (RLS 우회, **anon 키 아님**) |
+| `OPENAI_API_KEY` | 임베딩(`text-embedding-3-small`)과 답변 생성(`gpt-4o-mini`)에 사용 |
+
+환경변수 등록/변경 후에는 Vercel에서 **재배포(Redeploy)**가 필요합니다.
+
+## 문서 임베딩 적재 (최초 1회 + 문서 수정할 때마다)
+
+```bash
+npm install
+cp .env.example .env   # 값 채우기
+npm run ingest
+```
+
+`docs/` 안의 `.md` 파일을 읽어 청크로 나누고(`faq.md`는 질문 단위, 나머지는 헤딩 단위) OpenAI로 임베딩한 뒤 Supabase `documents` 테이블에 저장합니다. 같은 파일로 재실행하면 기존 데이터를 지우고 다시 넣어 중복되지 않습니다.
+
+## 답변 규칙 (`api/chat.js`의 시스템 프롬프트로 구현)
+
+- 검색된 문서(코사인 유사도 0.72 이상)만 근거로 답변하고, 없으면 지어내지 않고 상담 신청을 안내
+- 서비스와 무관한 질문은 직접 답하지 않고 서비스 주제로 유도
+- 법률·세무 판단은 하지 않고 전문가 상담을 권함
+- 임계값(`SIMILARITY_THRESHOLD`)과 모델(`LL_CHAT_MODEL`)은 `api/chat.js` 상단에서 조정 가능
+
+## 배포 방법
+
+```bash
+vercel --prod
+```
+또는 GitHub 저장소와 Vercel 프로젝트를 연결해두면 `main` 브랜치에 push할 때마다 자동 배포됩니다.
+
+## 배포 전 반드시 확인할 것
+
+1. 위 3개 환경변수를 Vercel에 등록했는지
+2. `npm run ingest`로 문서 임베딩을 최소 1회 적재했는지 (안 하면 챗봇이 항상 "관련 문서를 찾지 못했습니다" 상태로 답변)
+3. 실제로 챗봇에 질문을 던져보고, 상담 폼을 한 번 제출해서 Supabase Table Editor의 `chat_logs`/`leads`에 데이터가 쌓이는지 확인
 
 ## 원본(편집용) 프로젝트와의 차이
 

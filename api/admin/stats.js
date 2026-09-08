@@ -22,7 +22,7 @@ module.exports = async function handler(req, res) {
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
   try {
-    const [totalLeadsRes, leadsLast7Res, totalChatLogsRes, totalDocChunksRes, sessionRowsRes, sourceRowsRes] = await Promise.all([
+    const results = await Promise.all([
       supabase.from('leads').select('*', { count: 'exact', head: true }),
       supabase.from('leads').select('*', { count: 'exact', head: true }).gte('created_at', sevenDaysAgo),
       supabase.from('chat_logs').select('*', { count: 'exact', head: true }),
@@ -30,6 +30,17 @@ module.exports = async function handler(req, res) {
       supabase.from('chat_logs').select('session_id').limit(5000),
       supabase.from('documents').select('source').limit(5000),
     ]);
+
+    // Supabase 쿼리는 네트워크·DB 오류가 나도 예외를 던지지 않고 { error }를 담아 정상 반환하므로,
+    // 여기서 명시적으로 확인하지 않으면 실제 장애 상황이 "데이터 0건"으로 조용히 둔갑합니다.
+    const failed = results.find((r) => r.error);
+    if (failed) {
+      console.error('admin stats: supabase query failed', failed.error);
+      res.status(502).json({ error: 'database unreachable', detail: failed.error.message });
+      return;
+    }
+
+    const [totalLeadsRes, leadsLast7Res, totalChatLogsRes, totalDocChunksRes, sessionRowsRes, sourceRowsRes] = results;
 
     const totalSessions = new Set((sessionRowsRes.data || []).map((r) => r.session_id)).size;
     const totalDocSources = new Set((sourceRowsRes.data || []).map((r) => r.source)).size;

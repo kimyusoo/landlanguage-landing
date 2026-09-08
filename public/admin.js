@@ -93,10 +93,14 @@
 
   // ---- 통계 ----
   function loadStats() {
-    return api('/api/admin/stats').then(function (r) { return r.json(); }).then(function (d) {
+    return api('/api/admin/stats').then(function (r) {
+      return r.json().then(function (d) { return { ok: r.ok, d: d }; });
+    }).then(function (result) {
       Array.prototype.forEach.call(document.querySelectorAll('[data-stat]'), function (el) {
+        if (!result.ok) { el.textContent = '오류'; el.title = result.d.error || ''; return; }
         var key = el.getAttribute('data-stat');
-        el.textContent = (d[key] != null ? d[key] : '-');
+        el.textContent = (result.d[key] != null ? result.d[key] : '-');
+        el.title = '';
       });
     });
   }

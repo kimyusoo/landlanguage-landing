@@ -1,5 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 const OpenAI = require('openai');
+const { PHONE_REGEX, normalizePhone, extractName, summarizeConversation } = require('../lib/contact-capture');
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -16,7 +17,8 @@ const SYSTEM_PROMPT = `당신은 부동산마케팅 대행사 '랜드랭귀지'�
 2. 랜드랭귀지의 서비스·계약·비용과 무관한 질문(날씨, 잡담, 다른 회사, 사적인 질문 등)에는 직접 답하지 말고, 정중하게 랜드랭귀지가 도와드릴 수 있는 주제로 대화를 유도하세요.
 3. 법률적 판단이나 세무 판단(계약의 적법성 여부, 정확한 세금 액수 등)은 하지 마세요. 일반적인 안내 수준까지만 말하고, 반드시 전문가(변호사·세무사) 상담을 권하세요.
 4. 친절한 상담원처럼 답하되 과장하거나 성과(계약률, 검색 순위 등)를 보장하는 표현은 쓰지 마세요.
-5. 답변은 한국어로, 3~6문장 내외로 간결하게 작성하세요.`;
+5. 답변은 한국어로, 3~6문장 내외로 간결하게 작성하세요.
+6. 참고 문서에서 답을 찾지 못해 상담을 안내하는 경우, 또는 고객이 더 자세한 상담을 원하는 것 같은 경우에는 "전화상담을 원하시면 성명과 전화번호를 남겨주시면 전화드리겠습니다."라고 함께 안내하세요. 성명과 전화번호는 이 채팅창에 바로 남겨도 된다는 점을 알려주세요.`;
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -42,6 +44,51 @@ module.exports = async function handler(req, res) {
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
   const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+
+  // 0) 전화상담 요청(성명+연락처) 감지 — 문서 검색 없이 바로 리드로 등록합니다.
+  const phoneMatch = question.match(PHONE_REGEX);
+  if (phoneMatch) {
+    let contactReply;
+    try {
+      const phone = normalizePhone(phoneMatch[0]);
+      const name = await extractName(openai, CHAT_MODEL, question, phoneMatch[0]);
+
+      if (!name) {
+        contactReply = '연락처는 확인했습니다. 성함도 함께 남겨주셔야 담당자가 정확히 안내해 드릴 수 있어요. 예를 들어 "홍길동, ' + phone + '"처럼 성함과 번호를 한 번에 남겨주시겠어요?';
+      } else {
+        const summary = await summarizeConversation(openai, CHAT_MODEL, supabase, sessionId);
+        try {
+          await supabase.from('leads').insert([
+            {
+              name,
+              phone,
+              email: '',
+              company: '',
+              message: '[챗봇 전화상담 요청]\n' + summary,
+            },
+          ]);
+        } catch (leadErr) {
+          console.error('chat contact capture: lead insert failed', leadErr);
+        }
+        contactReply = name + '님, 연락처 남겨주셔서 감사합니다. 지금까지 상담 내용을 정리해서 담당자에게 전달했고, 곧 ' + phone + '(으)로 전화드리겠습니다. 좋은 하루 보내세요!';
+      }
+    } catch (err) {
+      console.error('contact capture error', err);
+      contactReply = '죄송합니다, 연락처 접수 중 문제가 발생했습니다. 우측 하단 "무료 상담 신청하기"를 이용해 주시거나 잠시 후 다시 시도해 주세요.';
+    }
+
+    try {
+      await supabase.from('chat_logs').insert([
+        { session_id: sessionId, role: 'user', content: question },
+        { session_id: sessionId, role: 'assistant', content: contactReply },
+      ]);
+    } catch (logErr) {
+      console.error('chat_logs insert failed', logErr);
+    }
+
+    res.status(200).json({ reply: contactReply });
+    return;
+  }
 
   let reply;
   try {

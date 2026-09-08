@@ -18,6 +18,7 @@ api/admin/leads.js  GET  /api/admin/leads — 최근 리드 200건
 api/admin/chat-logs.js GET /api/admin/chat-logs — 최근 대화 500건(세션별로 묶어서 반환)
 api/admin/documents.js GET/DELETE /api/admin/documents — 지식 문서 출처 목록 조회·삭제
 api/admin/upload.js POST /api/admin/upload — PDF/MD/TXT 업로드 → 청크 분할 → 임베딩 → documents 적재
+api/admin/leads-export.js GET /api/admin/leads-export — 현재 leads 전체를 엑셀(.xlsx)로 즉시 생성해 다운로드 (관리자 비밀번호 게이트로만 접근 가능)
 lib/chunk.js        청크 분할 로직 (scripts/ingest.js, api/admin/upload.js 공용)
 lib/ingest-core.js  청크→임베딩→저장 파이프라인 (scripts/ingest.js, api/admin/upload.js 공용)
 lib/admin-auth.js   관리자 비밀번호 검사 (x-admin-password 헤더 비교)

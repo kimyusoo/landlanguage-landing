@@ -8,6 +8,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
     "openai": "^4.68.0",
-    "unpdf": "^1.8.1"
+    "unpdf": "^1.8.1",
+    "xlsx": "^0.18.5"
   }
 }

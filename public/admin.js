@@ -125,6 +125,37 @@
     });
   }
 
+  // ---- 리드 엑셀 다운로드 ----
+  var exportBtn = document.getElementById('exportLeadsBtn');
+  exportBtn.addEventListener('click', function () {
+    var originalText = exportBtn.textContent;
+    exportBtn.disabled = true;
+    exportBtn.textContent = '생성 중...';
+    api('/api/admin/leads-export')
+      .then(function (res) {
+        if (!res.ok) throw new Error('export failed: ' + res.status);
+        return res.blob();
+      })
+      .then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        var today = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = 'leads_' + today + '.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      })
+      .catch(function () {
+        alert('엑셀 파일을 만드는 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      })
+      .finally(function () {
+        exportBtn.disabled = false;
+        exportBtn.textContent = originalText;
+      });
+  });
+
   // ---- 대화기록 ----
   function loadChats() {
     var list = document.getElementById('chatsList');
